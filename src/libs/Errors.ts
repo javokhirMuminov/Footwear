@@ -1,4 +1,4 @@
-export enum HttpmCode {
+export enum HttpCode {
   OK = 200,
   CREAT =201,
   NOT_MODIFIED = 304,
@@ -26,16 +26,16 @@ export enum Message {
 }
 
 class Errors extends Error {
-  public code: HttpmCode;
+  public code: HttpCode;
   public message: Message;
 
 
   static standard = {
-    code: HttpmCode.INTERNAL_SERVER_ERROR,
+    code: HttpCode.INTERNAL_SERVER_ERROR,
     message: Message.SOMETHING_WENT_WRONG,
   }
 
-  constructor(statusCode: HttpmCode, statusMessage: Message) {
+  constructor(statusCode: HttpCode, statusMessage: Message) {
     super();
     this.code = statusCode;
     this.message = statusMessage;
