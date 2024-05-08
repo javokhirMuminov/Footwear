@@ -1,5 +1,7 @@
 import express from 'express';
 import path from 'path';
+import router from "./router";
+import routerAdmin from "./routerAdmin"
 
 /***1-ENTRANCE */
  const app=express();
@@ -16,6 +18,8 @@ app.set("view engine","ejs")
 
 
 /**4-ROUTERS */
+app.use("/admin", routerAdmin); //SSR: EJS
+app.use('/', router); //Middleware Design Pattern   REACT
 
 
 export default app; //module.expoport
