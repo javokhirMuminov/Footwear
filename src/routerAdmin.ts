@@ -10,6 +10,7 @@ routerAdmin.post("/login", shopController.proccessLogin);
 
 routerAdmin.get("/signup", shopController.getSignup);
 routerAdmin.post("/signup", shopController.proccessSignup);
+routerAdmin.get("/logout", shopController.logout);
 
 
 /***ShopingProduct */

@@ -11,9 +11,10 @@ import ConnectMongoDB from 'connect-mongodb-session';
 
 const MongoDBStore = ConnectMongoDB(session);
 const store = new MongoDBStore({
-  uri: String(process.env.MOGO_URL),
-  collection: "sessions",
-});
+ uri: String(process.env.MONGO_URL),
+ collection: "sessions",
+
+})
 //Buyerda biz mongodb ni ichida shu session nomli yangi qatorni hosil qilyapmiz
 
 /***1-ENTRANCE */
@@ -29,7 +30,7 @@ app.use(
   session({
     secret: String(process.env.SESSION_SECRET),
     cookie: {
-      maxAge: 1000 * 3600 *3, //3h
+      maxAge: 1000 * 3600 * 6, //6h
     },
     store: store,
     resave: true,//buyerda bizni foydalanuvchi maxAge ni ichida berilgan vaqtni ichida kirsa vaqtni yangilashiga true qildik!
