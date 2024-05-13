@@ -5,6 +5,8 @@ import { LoginInput, MemberInput } from "../libs/types/member";
 import { MemberType } from "../libs/enums/member.enum";
 
 
+const memberService = new MemberService();
+
 
 const shopController: T = {};
 shopController.goHome = (req:Request, res: Response) => {
@@ -28,18 +30,19 @@ shopController.getLogin = (req:Request, res: Response) => {
   }
  }
 
- shopController.processLogin = async (req:Request, res: Response) => {
+ shopController.proccessLogin = async (req:Request, res: Response) => {
   try {
     console.log("processLogin");
     console.log(req.body);
     const input:LoginInput = req.body;
 
-    const memberService = new MemberService();
-    const result = await memberService.processLogin(input);
+    const result = await memberService.proccessLogin(input);
 
    res.send(result);
   }catch (err) {
    console.log("Error, processLogin", err);
+   res.send(err);
+
   }
  }
 
@@ -55,15 +58,14 @@ shopController.getLogin = (req:Request, res: Response) => {
   }
  }
 
- shopController.processSignup = async (req:Request, res: Response) => {
+ shopController.proccessSignup = async (req:Request, res: Response) => {
   try {
     console.log("processSignup");
 
     const newMember: MemberInput = req.body;
     newMember.memberType = MemberType.SHOP;
 
-    const memberService = new MemberService();
-    const result =  await memberService.processSignup(newMember);
+    const result =  await memberService.proccessSignup(newMember);
 
     res.send(result);
   }catch (err) {

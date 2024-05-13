@@ -5,13 +5,11 @@ import shopController from "./controllers/shop.controller";
 /**Shoping */
 routerAdmin.get('/', shopController.goHome);
 
-routerAdmin
-.get('/login', shopController.getLogin)
-.post("/login", shopController.processLogin);
+routerAdmin.get("/login", shopController.getLogin);
+routerAdmin.post("/login", shopController.proccessLogin);
 
-routerAdmin
-.get('/signup', shopController.getSignup)
-.post("/signup", shopController.processSignup);
+routerAdmin.get("/signup", shopController.getSignup);
+routerAdmin.post("/signup", shopController.proccessSignup);
 
 
 /***ShopingProduct */
