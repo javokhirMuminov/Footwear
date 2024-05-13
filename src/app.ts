@@ -5,6 +5,17 @@ import routerAdmin from "./routerAdmin";
 import morgan from "morgan";
 import { MORGAN_FORMAT } from './libs/config';
 
+
+import session  from 'express-session';
+import ConnectMongoDB from 'connect-mongodb-session';
+
+const MongoDBStore = ConnectMongoDB(session);
+const store = new MongoDBStore({
+  uri: String(process.env.MOGO_URL),
+  collection: "sessions",
+});
+//Buyerda biz mongodb ni ichida shu session nomli yangi qatorni hosil qilyapmiz
+
 /***1-ENTRANCE */
  const app=express();
 
@@ -14,6 +25,18 @@ import { MORGAN_FORMAT } from './libs/config';
  app.use(morgan(MORGAN_FORMAT));
 
 /***2-SESSIONS */
+app.use(
+  session({
+    secret: String(process.env.SESSION_SECRET),
+    cookie: {
+      maxAge: 1000 * 3600 *3, //3h
+    },
+    store: store,
+    resave: true,//buyerda bizni foydalanuvchi maxAge ni ichida berilgan vaqtni ichida kirsa vaqtni yangilashiga true qildik!
+    saveUninitialized: true,
+  })
+);
+
 
 /** 3-  VIEWS */
 app.set('views', path.join(__dirname, 'views'));
