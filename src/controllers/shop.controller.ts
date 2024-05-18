@@ -1,9 +1,9 @@
 import { T } from "../libs/types/common";
-import {Request, Response} from "express";
+import {NextFunction, Request, Response} from "express";
 import MemberService  from "../models/Member.service";
 import { AdminRequest, LoginInput, MemberInput } from "../libs/types/member";
 import { MemberType } from "../libs/enums/member.enum";
-import { Message } from "../libs/Errors";
+import Errors, { Message } from "../libs/Errors";
 
 
 const memberService = new MemberService();
@@ -111,7 +111,25 @@ shopController.getLogin = (req:Request, res: Response) => {
 
 
 
+shopController.verifyShop = (
+  req: AdminRequest,
+  res: Response,
+ next: NextFunction
+ ) => {
 
+     if(req.session?.member?.memberType === MemberType.RESTAURANT) {
+       req.member = req.session.member;
+       next();//buyerda prosess quyilmasa qotib qoladi midel ver uchun next quyish shart bolmasa keyingi pagega utkazmaydi!
+       console.log("parol togri")
+       /*buyerdagi algaritim bizfa shu req ni ichida bizga kim kirib kelayotkanini aniqlashda ishlaydi*/
+     }else {
+      const message = Message.NOT_AUTHENTICATED;
+        res.send (
+        `<script> alert("${message}"); window.location.replace('/admin/login);</script>`
+        );
+        console.log("parol yuq")
+     }
+}
 
 
  export default shopController;
