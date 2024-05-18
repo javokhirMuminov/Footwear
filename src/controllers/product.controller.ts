@@ -24,10 +24,10 @@ productController.getAllProducts = async (req:AdminRequest, res: Response) => {
  }
 
 
- productController.createNewProducts = async (req:Request, res: Response) => {
+ productController.createNewProducts = async (req:AdminRequest, res: Response) => {
   try {
     console.log("createNewProducts");
-
+    res.send("DONE");
 
   }catch (err) {
    console.log("createNewProducts", err);
