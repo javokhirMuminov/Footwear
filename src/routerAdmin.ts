@@ -18,7 +18,7 @@ routerAdmin.get("/logout", shopController.logout);
 /***ShopingProduct */
 routerAdmin.get("/product/all",shopController.verifyShop, productController.getAllProducts);
 
-routerAdmin.post("/product/create",shopController.verifyShop,makeUploader("products").array("productImages", 5),  productController.createNewProducts);
+routerAdmin.post("/product/create",shopController.verifyShop,makeUploader("products").array("productImages", 5),  productController.createNewProduct);
 
 routerAdmin.post("/product/:id",shopController.verifyShop, productController.updateChosenProducts);
 

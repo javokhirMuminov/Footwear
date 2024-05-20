@@ -120,7 +120,7 @@ shopController.verifyShop = (
  next: NextFunction
  ) => {
 
-     if(req.session?.member?.memberType === MemberType.RESTAURANT) {
+     if(req.session?.member?.memberType === MemberType.SHOP) {
        req.member = req.session.member;
        next();//buyerda prosess quyilmasa qotib qoladi midel ver uchun next quyish shart bolmasa keyingi pagega utkazmaydi!
        console.log("parol togri")
