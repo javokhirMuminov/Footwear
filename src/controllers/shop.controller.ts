@@ -3,7 +3,7 @@ import {NextFunction, Request, Response} from "express";
 import MemberService  from "../models/Member.service";
 import { AdminRequest, LoginInput, MemberInput } from "../libs/types/member";
 import { MemberType } from "../libs/enums/member.enum";
-import Errors, { Message } from "../libs/Errors";
+import Errors, { HttpCode, Message } from "../libs/Errors";
 
 
 const memberService = new MemberService();
@@ -54,8 +54,11 @@ shopController.getLogin = (req:Request, res: Response) => {
  shopController.proccessSignup = async (req:AdminRequest, res: Response) => {
   try {
     console.log("processSignup");
+    const file = req.file;
+    if(!file) throw new Errors(HttpCode.BAD_REQUEST, Message.SOMETHING_WENT_WRONG);
 
     const newMember: MemberInput = req.body;
+    newMember.memberImage = file?.path;
     newMember.memberType = MemberType.SHOP;
 
     const result =  await memberService.proccessSignup(newMember);
@@ -63,7 +66,7 @@ shopController.getLogin = (req:Request, res: Response) => {
     //SESSION AUTHENTICATION
     req.session.member = result;
     req.session.save(function() {
-      res.send(result);
+      res.redirect("/admin/product/all");
     });//Buyerda biz sessinimizni ichiga requestni borib joylashini aytyapmiz
   }catch (err) {
     console.log("Error, processSignup:", err);
@@ -82,7 +85,7 @@ shopController.getLogin = (req:Request, res: Response) => {
     const result = await memberService.proccessLogin(input);
     req.session.member = result;
     req.session.save(function() {
-      res.send(result);
+      res.redirect("/admin/product/all");
     });
 
 
